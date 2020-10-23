@@ -63,7 +63,7 @@ def format_table_coldef(coldef):
     max_format = max(6, max_format)
 
     # Determine if the information fits in two columns:
-    midpoint = len(col_names)//2
+    midpoint = len(col_names)//2 + len(col_names) % 2
     col_names1 = col_names[:midpoint]
     col_names2 = col_names[midpoint:]
     col_formats1 = col_formats[:midpoint]
@@ -107,6 +107,8 @@ def format_table_coldef(coldef):
         column_overview += ("{:^%i}" % max_name2).format('NAME') + '   '
         column_overview += ("{:^%i}" % max_format2).format('FORMAT') + "\n"
         column_overview += (max_name1 + max_format1 + max_name2 + max_format2 + 9 + 6) * "-" + "\n"
+        if len(col_names) % 2:
+            output_rows[-1] += "\n"
         for row in output_rows:
             column_overview += row
         column_overview += (max_name1 + max_format1 + max_name2 + max_format2 + 9 + 6) * "-" + "\n"
@@ -114,9 +116,10 @@ def format_table_coldef(coldef):
     return column_overview
 
 
-def show_table(fname, ext=1):
+def show_table(fname, ext=1, num=10):
     """
-    Show the top 10 rows of a FITS table using Astropy
+    Show the top `num` rows of a FITS table using Astropy
+    Default is to show top 10 lines.
     """
     if not os.path.exists(fname):
         print(f" [ERROR] - File not found: {fname}")
@@ -126,9 +129,9 @@ def show_table(fname, ext=1):
     table = Table(fits_table)
     N_rows = len(table)
 
-    str_repr = table.__repr__()
+    str_repr = table[:num].__repr__()
     all_lines = str_repr.split('\n')
-    top10 = all_lines[1:14]
+    top10 = all_lines[1:]
     top10_str = '\n'.join(top10)
     table_format_overview = format_table_coldef(fits_table.columns)
     padding = (len(all_lines[4]) - 17) * "-"
@@ -136,6 +139,7 @@ def show_table(fname, ext=1):
     print("---- Top 10 Rows " + padding)
     print(top10_str)
     print("\nLength: %i rows\n" % N_rows)
+
 
 if __name__ == '__main__':
     fname = sys.argv[1]
