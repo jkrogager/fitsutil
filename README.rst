@@ -5,7 +5,7 @@ FITSutil
 
 FITS tools written in Python:
 
- `fitstab.py` : Preview a FITS table from the terminal.
+- `fitstab.py` : Preview a FITS table from the terminal.
 
 The script `fitstab.py` takes the following two arguments::
 
