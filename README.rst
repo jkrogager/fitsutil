@@ -30,7 +30,9 @@ Depends on ``astropy``.
 Setup
 -----
 
-The setup is very simple: Simply add an `alias` in your `.bashrc` file (or similar)::
+The setup is very simple: Simply add an `alias` in your `.bashrc` file (or similar):
+
+.. code-block:: bash
 
     alias fitstab="python3 /PATH/TO/FITSUTIL/fitstab.py"
 
