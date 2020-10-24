@@ -183,7 +183,8 @@ def show_table(fname, ext=1, num=10):
         print(top_line)
         print(top10_str)
         print(bottom_line)
-    print("\nLength: %i rows\n" % N_rows)
+        print("")
+    print("Length: %i rows\n" % N_rows)
 
 
 if __name__ == '__main__':
