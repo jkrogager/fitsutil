@@ -184,7 +184,7 @@ def show_table(fname, ext=1, num=10):
         print(top10_str)
         print(bottom_line)
         print("")
-    print("Length: %i rows\n" % N_rows)
+    print("  Table Length: %i rows\n" % N_rows)
 
 
 if __name__ == '__main__':
