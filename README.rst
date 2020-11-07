@@ -57,8 +57,7 @@ The following formats are allowed:
   -- Note: If more than one object is present (second dimension > 1),
   only the first object will be read and a UserWarning will be thrown.
 
-Installation
-============
+
 
 Dependencies
 ------------
@@ -71,7 +70,7 @@ Depends on ``astropy`` and ``numpy``.
 Setup
 -----
 
-The setup is very simple: Simply add an `alias` in your `.bashrc` file (or similar):
+To use `fitstab` from the terminal, you can define an alias in your `.bashrc` file (or similar):
 
 .. code-block:: bash
 
