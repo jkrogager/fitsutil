@@ -109,7 +109,7 @@ def get_spectrum_hdulist(HDU):
     return data, error, mask, data_hdr
 
 
-def load_fits_spectrum(fname):
+def load_fits_spectrum(fname, ext=None, iraf_obj=None):
     HDU = fits.open(fname)
     primhdr = HDU[0].header
     primary_has_data = HDU[0].data is not None
@@ -149,10 +149,15 @@ def load_fits_spectrum(fname):
                 #  (N_pixels, N_objs, 4)
                 #  The 4 axes are [flux, flux_noskysub, sky_flux, error]
                 data_array = HDU[0].data
-                if data_array.shape[1] > 1:
-                    warnings.warn("More than one object detected in the file", MultipleSpectraWarning)
-                data = data_array[0][0]
-                error = data_array[3][0]
+                if iraf_obj is None:
+                    # Use the first object by default
+                    iraf_obj = 0
+                    # If other objects are present, throw a warning:
+                    if data_array.shape[1] > 1:
+                        warnings.warn("More than one object detected in the file", MultipleSpectraWarning)
+
+                data = data_array[0][iraf_obj]
+                error = data_array[3][iraf_obj]
                 mask = np.ones_like(data, dtype=bool)
                 wavelength = get_wavelength_from_header(primhdr)
                 return wavelength, data, error, mask
@@ -162,9 +167,13 @@ def load_fits_spectrum(fname):
     else:
         is_fits_table = isinstance(HDU[1], fits.BinTableHDU) or isinstance(HDU[1], fits.TableHDU)
         if is_fits_table:
-            tbdata = HDU[1].data
+            if ext:
+                tbdata = HDU[ext].data
+            else:
+                tbdata = HDU[1].data
+
             has_multi_extensions = len(HDU) > 2
-            if has_multi_extensions:
+            if has_multi_extensions and (ext is None):
                 warnings.warn("More than one data extension detected in the file", MultipleSpectraWarning)
             wavelength, data, error, mask = get_spectrum_fits_table(tbdata)
             return wavelength, data, error, mask
