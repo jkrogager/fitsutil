@@ -1,5 +1,6 @@
 __pycache__
 src/*.pyc
 src/*.swp
+*.pyc
 *.swp
 .pytest_cache

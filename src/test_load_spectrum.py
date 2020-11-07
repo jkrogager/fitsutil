@@ -25,7 +25,13 @@ def test_fileinput():
         assert known_type == success, msg
 
 
+tmp_var = ["str", "str2", "name"]
+tmp_var2 = ["strf", "rupaul", "name"]
 def skip_warning():
+    """
+    The variable list: %(VARS)r
+    The other variable list: %(VAR_NAMES)r
+    """
     import warnings
     fname = '/Users/krogager/Projects/Q0857_CI/J0857+1855_uves_combined.fits'
     with warnings.catch_warnings(record=True) as w:
@@ -37,7 +43,9 @@ def skip_warning():
             print("Error: Could not determine the file format.")
             print("       The FITS file has the following structure:")
         print("Number of warnings: %i" % len(w))
+skip_warning.__doc__ = skip_warning.__doc__ % {'VARS': tmp_var, 'VAR_NAMES': tmp_var2}
 
 if __name__ == '__main__':
     skip_warning()
+    print(skip_warning.__doc__)
 
