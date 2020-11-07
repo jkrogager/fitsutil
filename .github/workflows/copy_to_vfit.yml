@@ -20,7 +20,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_file: 'src/fits_input.py'
+        source_file: 'jkrogager/fitsutil/src/fits_input.py'
         destination_repo: 'jkrogager/VoigtFit'
         destination_folder: 'VoigtFit'
         user_email: 'jens-kristian@krogager.dk'
