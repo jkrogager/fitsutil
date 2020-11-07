@@ -1,0 +1,28 @@
+# This is a basic workflow to help you get started with Actions
+
+name: push_file
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on: push
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_file: 'fits_input.py'
+        destination_repo: 'jkrogager/VoigtFit'
+        destination_folder: 'VoigtFit'
+        user_email: 'jens-kristian@krogager.dk'
+        user_name: 'jkrogager'
+        destination_branch: 'fits_input'
