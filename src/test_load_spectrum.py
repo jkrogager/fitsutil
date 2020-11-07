@@ -19,9 +19,25 @@ def test_fileinput():
         try:
             data = load_fits_spectrum(fname)
             success = 'yes'
-        except FormatError, WavelengthError:
+        except (FormatError, WavelengthError):
             success = 'no'
         msg = "A spectrum of type %s passed as type %s:  %s" % (known_type, success, fname)
         assert known_type == success, msg
 
+
+def skip_warning():
+    import warnings
+    fname = '/Users/krogager/Projects/Q0857_CI/J0857+1855_uves_combined.fits'
+    with warnings.catch_warnings(record=True) as w:
+        # warnings.simplefilter("ignore")
+        # warnings.simplefilter("once")
+        try:
+            data = load_fits_spectrum(fname)
+        except FormatError:
+            print("Error: Could not determine the file format.")
+            print("       The FITS file has the following structure:")
+        print("Number of warnings: %i" % len(w))
+
+if __name__ == '__main__':
+    skip_warning()
 
