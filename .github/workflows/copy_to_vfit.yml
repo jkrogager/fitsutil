@@ -25,4 +25,3 @@ jobs:
         destination_folder: 'VoigtFit'
         user_email: 'jens-kristian@krogager.dk'
         user_name: 'jkrogager'
-        destination_branch: 'fits_input'
